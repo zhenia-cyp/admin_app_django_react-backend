@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  api:
+    container_name: django_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - admin_db
+  admin_db:
+    container_name: my_admin_db
+    image: mysql:5.7.22
+    restart: always
+    environment:
+      MYSQL_DATABASE: django_admin
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
