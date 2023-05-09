@@ -3,5 +3,5 @@ from users.views import *
 
 
 urlpatterns = [
-    path('test/', TestViews.as_view()),
+    path('all/', TestViews.as_view()),
 ]
