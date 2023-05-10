@@ -9,6 +9,6 @@ class User(models.Model):
     password = models.CharField(max_length=200)
 
     def __str__(self):
-        return '{0}'.format(self.first_name)
+        return '{0},{1},{2},{3}'.format(self.first_name,self.last_name,self.email,self.password)
 
 
