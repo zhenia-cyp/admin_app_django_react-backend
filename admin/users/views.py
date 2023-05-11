@@ -6,14 +6,15 @@ from .serializers import UserSerializer
 
 
 class TestViews(APIView):
-
-    def get(self,request):
+    """This class returns all users from the database"""
+    def get(self, request):
         users = User.objects.all()
-        return Response(users)
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
 
 class RegisterViews(APIView):
-
+    """This class handles the registration of new users"""
     def post(self,request):
         data = request.data
         if data['password'] != data['password_confirm']:
