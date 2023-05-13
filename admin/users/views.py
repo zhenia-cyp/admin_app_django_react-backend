@@ -1,14 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import exceptions
-from users.models import User
+from users.models import MyUser
 from .serializers import UserSerializer
 
 
 class TestViews(APIView):
     """This class returns all users from the database"""
     def get(self, request):
-        users = User.objects.all()
+        users = MyUser.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
