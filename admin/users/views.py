@@ -5,6 +5,7 @@ from users.models import MyUser
 from .serializers import UserSerializer
 
 
+
 class TestViews(APIView):
     """This class returns all users from the database"""
     def get(self, request):
@@ -23,3 +24,17 @@ class RegisterViews(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+
+class LoginView(APIView):
+    def post(self,request):
+        email = request.data.get('email')
+        password = request.data.get('password')
+        user = MyUser.objects.filter(email=email).first()
+        
+        if user is None:
+            raise exceptions.AuthenticationFailed('User not found!')
+
+        if not user.is_password_valid(password):
+           raise exceptions.AuthenticationFailed('Password is incorrect!')
+        return Response('success!')
