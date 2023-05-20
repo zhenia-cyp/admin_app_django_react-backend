@@ -56,3 +56,14 @@ class AuthenticatedUser(APIView):
         return Response({
             'data': serializer.data
         })
+
+
+class LogOutView(APIView):
+    """This class deletes the authorization token from the cookie."""
+    def post(self,_):
+        response = Response()
+        response.delete_cookie(key='jwt')
+        response.data = {
+            'message': 'logout is success!'
+        }
+        return response
