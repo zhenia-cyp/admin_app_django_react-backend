@@ -2,15 +2,26 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.contrib.auth.hashers import check_password
 
+
+class Permission(models.Model):
+    name = models.CharField(max_length=200)
+
+
+class Role(models.Model):
+    name = models.CharField(max_length=200)
+    permissions = models.ManyToManyField(Permission)
+
+
 class MyUser(AbstractUser):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.CharField(max_length=200, unique=True)
     password = models.CharField(max_length=200)
     username = models.CharField(max_length=200, blank=True, null=True)
+    role = models.ForeignKey(Role,on_delete=models.SET_NULL, null=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return '{0},{1},{2},{3}'.format(self.first_name, self.last_name, self.email, self.password)

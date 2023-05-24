@@ -85,9 +85,6 @@ DATABASES = {
         'PASSWORD': 'root',
         'PORT': '3306',
         'HOST': 'admin_db',
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-        },
     }
 }
 

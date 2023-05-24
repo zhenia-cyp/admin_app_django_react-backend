@@ -7,6 +7,7 @@ from .authentication import generate_access_token,JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
+
 class TestViews(APIView):
     """This class returns all users from the database"""
     def get(self, request):
@@ -28,6 +29,7 @@ class RegisterViews(APIView):
 
 
 class LoginView(APIView):
+    """This class handles user login"""
     def post(self,request):
         email = request.data.get('email')
         password = request.data.get('password')
@@ -49,6 +51,7 @@ class LoginView(APIView):
         return response
 
 class AuthenticatedUser(APIView):
+    """This class returns the authenticated user's data"""
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
