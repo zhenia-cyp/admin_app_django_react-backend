@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import exceptions
-from users.models import MyUser
-from .serializers import UserSerializer
+from rest_framework import exceptions, viewsets
+from users.models import MyUser, Role, Permission
+from .serializers import UserSerializer, RoleSerializer, PermissionSerializer
 from .authentication import generate_access_token,JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -70,3 +70,23 @@ class LogOutView(APIView):
             'message': 'logout is success!'
         }
         return response
+
+
+class PermissionView(APIView):
+    """The class returns a list of serialized data - all permissions for users"""
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = PermissionSerializer(Permission.objects.all(), many=True)
+
+        return Response({
+            'data': serializer.data
+        })
+
+
+
+
+
+
+

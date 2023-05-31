@@ -6,10 +6,22 @@ from django.contrib.auth.hashers import check_password
 class Permission(models.Model):
     name = models.CharField(max_length=200)
 
+    class Meta:
+        verbose_name = "Право доступа"
+        verbose_name_plural = "Права доступа"
+        ordering = ['id']
+
+
 
 class Role(models.Model):
     name = models.CharField(max_length=200)
     permissions = models.ManyToManyField(Permission)
+
+    class Meta:
+        verbose_name = "Роль"
+        verbose_name_plural = "Роли"
+        ordering = ['id']
+
 
 
 class MyUser(AbstractUser):
