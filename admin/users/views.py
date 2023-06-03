@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import exceptions, viewsets, status
+from rest_framework import exceptions, viewsets, status, generics, mixins
 from users.models import MyUser, Role, Permission
 from .serializers import UserSerializer, RoleSerializer, PermissionSerializer
 from .authentication import generate_access_token,JWTAuthentication
@@ -105,7 +105,6 @@ class RoleViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         role = Role.objects.get(id=pk)
         serializer = RoleSerializer(role)
-
         return Response({
             'data': serializer.data
         })
@@ -124,6 +123,38 @@ class RoleViewSet(viewsets.ViewSet):
 
 
 
+class UserGenericAPIView(
+    generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin
+):
+    """This class provides generic CRUD operations with objects of the MyUser model"""
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = MyUser.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, pk=None):
+        if pk:
+            return Response({
+                'data': self.retrieve(request, pk).data
+            })
+
+        return self.list(request)
+
+    def post(self, request):
+        return Response({
+            'data': self.create(request).data
+        })
+
+    def put(self, request, pk=None):
+        return Response({
+            'data': self.update(request).data
+        })
+
+    def delete(self, request, pk=None):
+        return Response({
+            'data': self.destroy(request, pk)
+        })
 
 
 
