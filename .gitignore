@@ -1,2 +1,7 @@
 .idea
 admin/.dbdata
+# Игнорировать файлы .pyc
+*.pyc
+
+# Игнорировать файлы кэша __pycache__
+__pycache__/

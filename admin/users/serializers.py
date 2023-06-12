@@ -1,10 +1,21 @@
 from rest_framework import serializers
 from .models import MyUser, Role, Permission
 
+
+
+class RoleRelatedField(serializers.RelatedField):
+    def to_representation(self, instance):
+        return RoleSerializer(instance).data
+
+    def to_internal_value(self, data):
+        return self.queryset.get(pk=data)
+
+
 class UserSerializer(serializers.ModelSerializer):
+    role = RoleRelatedField(many=False, queryset=Role.objects.all())
     class Meta:
         model = MyUser
-        fields = ['id','first_name','last_name','email','password','username']
+        fields = ['id','first_name','last_name','email','password','username', 'role']
         extra_kwargs = {
             'password': {'write_only': True }
         }
@@ -30,8 +41,6 @@ class PermissionRelatedField(serializers.StringRelatedField):
 
     def to_internal_value(self, data):
         return data
-
-
 
 
 class RoleSerializer(serializers.ModelSerializer):

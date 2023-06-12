@@ -145,13 +145,24 @@ class UserGenericAPIView(
         return self.list(request)
 
     def post(self, request):
+        request.data.update({
+            'password': 1234,
+            'role': request.data['role_id']
+        })
         return Response({
             'data': self.create(request).data
         })
 
     def put(self, request, pk=None):
-        return Response({
-            'data': self.update(request).data
+        if request.data['role_id']:
+            request.data.update({
+                'password': 1234,
+                'role': request.data['role_id']
+
+            })
+
+            return Response({
+            'data': self.partial_update(request).data
         })
 
     def delete(self, request, pk=None):
