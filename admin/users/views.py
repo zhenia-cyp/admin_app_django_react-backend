@@ -158,7 +158,6 @@ class UserGenericAPIView(
             request.data.update({
                 'password': 1234,
                 'role': request.data['role_id']
-
             })
 
             return Response({
@@ -169,6 +168,19 @@ class UserGenericAPIView(
         return Response({
             'data': self.destroy(request, pk)
         })
+
+
+class ProfileAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, pk=None):
+        user = request.user
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
 
 
 
