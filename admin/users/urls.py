@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import TestViews, RegisterViews, LoginView, AuthenticatedUser, LogOutView, PermissionView, RoleViewSet, \
-    UserGenericAPIView
+    UserGenericAPIView, ProfileAPIView, ProfilePasswordAPIView
 
 urlpatterns = [
     path('all/', TestViews.as_view()),
@@ -18,6 +18,8 @@ urlpatterns = [
         'put': 'update',
         'delete': 'destroy'
     })),
+    path('users/info/', ProfileAPIView.as_view()),
+    path('users/password/', ProfilePasswordAPIView.as_view()),
     path('get/users/', UserGenericAPIView.as_view()),
     path('get/users/<int:pk>', UserGenericAPIView.as_view()),
 ]

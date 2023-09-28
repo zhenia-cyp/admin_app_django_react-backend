@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import exceptions, viewsets, status, generics, mixins
-
 from admin.pagination import CustomPagination
 from users.models import MyUser, Role, Permission
 from .serializers import UserSerializer, RoleSerializer, PermissionSerializer
@@ -18,9 +17,10 @@ class TestViews(APIView):
         return Response(serializer.data)
 
 
+
 class RegisterViews(APIView):
     """This class handles the registration of new users"""
-    def post(self,request):
+    def post(self, request):
         data = request.data
         if data['password'] != data['password_confirm']:
             raise exceptions.APIException('Passwords do not match')
@@ -36,20 +36,16 @@ class LoginView(APIView):
         email = request.data.get('email')
         password = request.data.get('password')
         user = MyUser.objects.filter(email=email).first()
-
         if user is None:
             raise exceptions.AuthenticationFailed('User not found!')
-
         if not user.is_password_valid(password):
            raise exceptions.AuthenticationFailed('Password is incorrect!')
-
         response = Response()
         token = generate_access_token(user)
         response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
             'jwt': token
         }
-
         return response
 
 class AuthenticatedUser(APIView):
@@ -171,6 +167,7 @@ class UserGenericAPIView(
 
 
 class ProfileAPIView(APIView):
+    """This class handles profile updates for a user"""
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -181,6 +178,20 @@ class ProfileAPIView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+
+class ProfilePasswordAPIView(APIView):
+    """This class manages password changes for a user"""
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def put(self,request,pk=None):
+        user = request.user
+        if request.data['password'] != request.data['password_confirm']:
+            raise exceptions.ValidationError("Password don't match")
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 
 
