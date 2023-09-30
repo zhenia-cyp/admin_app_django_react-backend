@@ -2,7 +2,7 @@
 admin/.dbdata
 # Игнорировать файлы .pyc
 *.pyc
-
+venv
 # Игнорировать файлы кэша 
 __pycache__
 __pycache__/
