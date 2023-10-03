@@ -1,0 +1,107 @@
+[
+  {
+    "model": "orders.order",
+    "pk": 1,
+    "fields": {
+      "first_name": "George",
+      "last_name": "Bush",
+      "email": "george.bush@gmail.com",
+      "created_at": "2020-1-1",
+      "updated_at": "2020-1-1"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 2,
+    "fields": {
+      "first_name": "Richard",
+      "last_name": "Nixon",
+      "email": "richard.nixon@gmail.com",
+      "created_at": "2020-2-1",
+      "updated_at": "2020-2-1"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 3,
+    "fields": {
+      "first_name": "Bill",
+      "last_name": "Clinton",
+      "email": "bill.clinton@gmail.com",
+      "created_at": "2020-3-1",
+      "updated_at": "2020-3-1"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 1,
+    "fields": {
+      "order_id": 1,
+      "product_title": "Sony VAIO Pro SVP1321HGXBI 13.3",
+      "price": 10,
+      "quantity": 2,
+      "created_at": "2020-1-1",
+      "updated_at": "2020-1-1"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 2,
+    "fields": {
+      "order_id": 1,
+      "product_title": "Microsoft Surface Laptop Go - 12.4",
+      "price": 20,
+      "quantity": 3,
+      "created_at": "2020-1-1",
+      "updated_at": "2020-1-1"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 3,
+    "fields": {
+      "order_id": 2,
+      "product_title": "HP Notebook Laptop, 15.6",
+      "price": 30,
+      "quantity": 3,
+      "created_at": "2020-2-1",
+      "updated_at": "2020-2-1"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 4,
+    "fields": {
+      "order_id": 2,
+      "product_title": "Dell 2022 Newest Inspiron 15 Laptop",
+      "price": 40,
+      "quantity": 4,
+      "created_at": "2020-2-1",
+      "updated_at": "2020-2-1"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 5,
+    "fields": {
+      "order_id": 3,
+      "product_title": "LG gram 17” Lightweight Laptop",
+      "price": 50,
+      "quantity": 5,
+      "created_at": "2020-3-1",
+      "updated_at": "2020-3-1"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 6,
+    "fields": {
+      "order_id": 3,
+      "product_title": "Acer Aspire 3 A315-24P-R7VH Slim Laptop",
+      "price": 60,
+      "quantity": 6,
+      "created_at": "2020-3-1",
+      "updated_at": "2020-3-1"
+    }
+  }
+]

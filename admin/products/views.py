@@ -45,6 +45,7 @@ class ProductGenericAPIView(
 
 
 class FileUploadView(APIView):
+    """The class uploads files to the media folder"""
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser,)
