@@ -6,7 +6,7 @@ from users.models import MyUser, Role, Permission
 from .serializers import UserSerializer, RoleSerializer, PermissionSerializer
 from .authentication import generate_access_token,JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
-
+from .permissions import ViewPermissions
 
 
 class TestViews(APIView):
@@ -74,7 +74,7 @@ class LogOutView(APIView):
 class PermissionView(APIView):
     """The class returns a list of serialized data - all permissions for users"""
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & ViewPermissions]
 
     def get(self, request):
         serializer = PermissionSerializer(Permission.objects.all(), many=True)
@@ -86,6 +86,7 @@ class PermissionView(APIView):
 class RoleViewSet(viewsets.ViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    permission_object = 'roles'
 
     def list(self, request):
         serializer = RoleSerializer(Role.objects.all(), many=True)
@@ -128,7 +129,8 @@ class UserGenericAPIView(
 ):
     """This class provides generic CRUD operations with objects of the MyUser model"""
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & ViewPermissions]
+    permission_object = 'users'
     queryset = MyUser.objects.all()
     serializer_class = UserSerializer
     pagination_class = CustomPagination
