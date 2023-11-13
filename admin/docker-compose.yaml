@@ -11,6 +11,8 @@ services:
       - 8000:8000
     depends_on:
       - admin_db
+    environment:
+      - PYTHONUNBUFFERED=1
   admin_db:
     container_name: my_admin_db
     image: mysql:5.7.22

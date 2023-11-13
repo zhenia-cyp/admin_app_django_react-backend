@@ -22,6 +22,7 @@ class RegisterViews(APIView):
     """This class handles the registration of new users"""
     def post(self, request):
         data = request.data
+        data['role']=1
         if data['password'] != data['password_confirm']:
             raise exceptions.APIException('Passwords do not match')
         serializer = UserSerializer(data=data)
