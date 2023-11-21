@@ -43,7 +43,7 @@ class LoginView(APIView):
            raise exceptions.AuthenticationFailed('Password is incorrect!')
         response = Response()
         token = generate_access_token(user)
-        response.set_cookie(key='jwt', value=token, httponly=True)
+        # response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
             'jwt': token
         }
@@ -54,6 +54,7 @@ class AuthenticatedUser(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
+        print('***')
         data = UserSerializer(request.user).data
         data['permissions']=[p['name'] for p in data['role']['permissions']]
         return Response({
