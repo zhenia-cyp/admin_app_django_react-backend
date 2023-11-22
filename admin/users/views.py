@@ -54,7 +54,6 @@ class AuthenticatedUser(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        print('***')
         data = UserSerializer(request.user).data
         data['permissions']=[p['name'] for p in data['role']['permissions']]
         return Response({
@@ -64,13 +63,15 @@ class AuthenticatedUser(APIView):
 
 class LogOutView(APIView):
     """This class deletes the authorization token from the cookie."""
-    def post(self,_):
-        response = Response()
-        response.delete_cookie(key='jwt')
-        response.data = {
-            'message': 'logout is success!'
-        }
-        return response
+    def post(self,request):
+        token = request.data.get('removetoken')
+        if token:
+            response = Response()
+            response.data = {
+            'message': 'logout is success!'}
+            return response
+
+
 
 
 class PermissionView(APIView):
