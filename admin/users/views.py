@@ -49,6 +49,7 @@ class LoginView(APIView):
         }
         return response
 
+
 class AuthenticatedUser(APIView):
     """This class returns the authenticated user's data"""
     authentication_classes = [JWTAuthentication]
@@ -143,7 +144,6 @@ class UserGenericAPIView(
             return Response({
                 'data': self.retrieve(request, pk).data
             })
-
         return self.list(request)
 
     def post(self, request):
@@ -167,9 +167,7 @@ class UserGenericAPIView(
         })
 
     def delete(self, request, pk=None):
-        return Response({
-            'data': self.destroy(request, pk)
-        })
+        return self.destroy(request, pk)
 
 
 class ProfileAPIView(APIView):
