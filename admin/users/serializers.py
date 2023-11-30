@@ -45,7 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
     role = RoleRelatedField(many=False, queryset=Role.objects.all())
     class Meta:
         model = MyUser
-        fields = ['id','first_name','last_name','email','password','username', 'role']
+        fields = ['id','first_name','last_name','email','password','username', 'role','order_num']
         extra_kwargs = {
             'password': {'write_only': True }
         }
