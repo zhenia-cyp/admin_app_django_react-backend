@@ -22,7 +22,7 @@ class RegisterViews(APIView):
     """This class handles the registration of new users"""
     def post(self, request):
         data = request.data
-        data['role']=3
+        data['role'] = 1
         if data['password'] != data['password_confirm']:
             raise exceptions.APIException('Passwords do not match')
         serializer = UserSerializer(data=data)
@@ -129,7 +129,7 @@ class RoleViewSet(viewsets.ViewSet):
 
 class UserGenericAPIView(
     generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin
+    mixins.DestroyModelMixin,
 ):
     """This class provides generic CRUD operations with objects of the MyUser model"""
     authentication_classes = [JWTAuthentication]
@@ -157,14 +157,14 @@ class UserGenericAPIView(
         })
 
     def put(self, request, pk=None):
+
         if request.data['role_id']:
             request.data.update({
-                'password': 1234,
                 'role': request.data['role_id']
             })
 
-            return Response({
-            'data': self.partial_update(request).data
+        return Response({
+            'data': self.partial_update(request, pk).data
         })
 
     def delete(self, request, pk=None):

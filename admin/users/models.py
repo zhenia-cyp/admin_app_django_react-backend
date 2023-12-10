@@ -43,7 +43,6 @@ class MyUser(AbstractUser):
         return check_password(password, self.password)
 
     def assign_order_numbers(self):
-        print('assign_order_numbers')
         users = MyUser.objects.all().order_by('id')
         for index, user in enumerate(users, start=1):
             user.order_num = index

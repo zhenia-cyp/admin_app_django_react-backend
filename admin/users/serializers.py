@@ -25,8 +25,10 @@ class RoleSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+
         permissions = validated_data.pop('permissions', None)
         instance = self.Meta.model(**validated_data)
+
         instance.save()
         instance.permissions.add(*permissions)
         instance.save()
@@ -35,6 +37,7 @@ class RoleSerializer(serializers.ModelSerializer):
 
 class RoleRelatedField(serializers.RelatedField):
     def to_representation(self, instance):
+        print('Role ', instance)
         return RoleSerializer(instance).data
 
     def to_internal_value(self, data):
@@ -51,6 +54,7 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self,validated_data):
+        print('validated_data: ', validated_data)
         password = validated_data.pop('password', None)
         instance = self.Meta.model(**validated_data)
         if password is not None:
@@ -62,6 +66,10 @@ class UserSerializer(serializers.ModelSerializer):
         password = validated_data.pop('password', None)
         if password is not None:
             instance.set_password(password)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.role = validated_data.get('role', instance.role)
         instance.save()
         return instance
 
