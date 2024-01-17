@@ -78,7 +78,9 @@ class LogOutView(APIView):
 class PermissionView(APIView):
     """The class returns a list of serialized data - all permissions for users"""
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated & ViewPermissions]
+    permission_classes = [IsAuthenticated, ViewPermissions]
+    permission_object = 'users'
+
 
     def get(self, request):
         serializer = PermissionSerializer(Permission.objects.all(), many=True)
@@ -87,12 +89,14 @@ class PermissionView(APIView):
         })
 
 
+
 class RoleViewSet(viewsets.ViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     permission_object = 'roles'
 
     def list(self, request):
+        Role.assign_order_numbers()
         serializer = RoleSerializer(Role.objects.all(), many=True)
         return Response({
             'data': serializer.data
@@ -144,7 +148,7 @@ class UserGenericAPIView(
             return Response({
                 'data': self.retrieve(request, pk).data
             })
-        MyUser.assign_order_numbers(self)
+        MyUser.assign_order_numbers()
         return self.list(request)
 
     def post(self, request):
