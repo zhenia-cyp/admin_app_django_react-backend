@@ -54,6 +54,6 @@ Author Antonio Papa.
 
 ​  To stop the Docker containers:
 
-  sudo docker-compose down
+    sudo docker-compose down
 
 
