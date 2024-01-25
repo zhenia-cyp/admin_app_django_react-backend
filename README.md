@@ -6,53 +6,54 @@ Author Antonio Papa.
 # Admin panel (Backend)
 
 1. Open the project in a Linux terminal 
-and clone the repository into the folder you need:
+   and clone the repository into the folder you need:
 
-        git clone https://github.com/zhenia-cyp/admin_app_django_react-backend
+       git clone https://github.com/zhenia-cyp/admin_app_django_react-backend
 
 2. Open the project and go to admin folder:
 
-        cd admin
+       cd admin
 
 3. Run the project using docker-compose:
 
-        sudo docker-compose up -d
+       sudo docker-compose up -d
 
 4. Now, we need to create a database with the required encoding. To do this, connect to the my_admin_db container:
 
-        sudo docker exec -it my_admin_db bash
+       sudo docker exec -it my_admin_db bash
 
 4.1  After connecting to the container, you can connect to the MySQL database using your login and password:
 
-    mysql -u root -proot -h admin_db django_admin
+        mysql -u root -proot -h admin_db django_admin
 
-4.2 Execute the following commands:
+​4.2 Execute the following commands:
 
-    DROP DATABASE django_admin;
-
-    CREATE DATABASE django_admin CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-4.3 To exit, use the exit command twice.
-
-5. Enter the next container and perform migrations:
-
-        sudo docker-compose exec api sh
+       DROP DATABASE django_admin;
     
-        python manage.py makemigrations
-    
-        python manage.py migrate
+       CREATE DATABASE django_admin CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-You can also create a superuser:
+​ 4.3 To exit, use the exit command twice.
 
-        python manage.py createsuperuser
+​ 5. Enter the next container and perform migrations:
 
-To exit, again use the exit command.
+    sudo docker-compose exec api sh
 
-<strong>Now that the docker containers are launched, you can start the frontend part of the project</strong> 
+    python manage.py makemigrations
 
-        https://github.com/zhenia-cyp/admin_app_django_react-frontend
+    python manage.py migrate
 
-To stop the Docker containers:
+​ You can also create a superuser:
 
-        sudo docker-compose down
+     python manage.py createsuperuser
+
+​ To exit, again use the exit command
+
+  **Now that the docker containers are launched, you can start the frontend part of the project**
+
+  https://github.com/zhenia-cyp/admin_app_django_react-frontend
+
+​  To stop the Docker containers:
+
+  sudo docker-compose down
+
 
