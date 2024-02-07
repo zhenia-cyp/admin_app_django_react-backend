@@ -10,7 +10,6 @@ class ViewPermissions(permissions.BasePermission):
         edit_access = any(p['name'] == 'edit_' + view.permission_object for p in data['role']['permissions'])
 
         if request.method == 'GET':
-            print('get: ', view_access, edit_access)
             return view_access or edit_access
         return edit_access
 

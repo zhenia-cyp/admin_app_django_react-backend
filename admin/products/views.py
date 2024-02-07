@@ -28,6 +28,7 @@ class ProductGenericAPIView(
                 'data': self.retrieve(request, pk).data
             })
 
+        Product.assign_order_numbers()
         return self.list(request)
 
     def post(self, request):
