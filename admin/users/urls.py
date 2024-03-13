@@ -18,8 +18,9 @@ urlpatterns = [
         'put': 'update',
         'delete': 'destroy'
     })),
-    path('users/info/', ProfileAPIView.as_view()),
-    path('users/password/', ProfilePasswordAPIView.as_view()),
+    path('info/', ProfileAPIView.as_view()),
+    path('password/', ProfilePasswordAPIView.as_view()),
     path('get/users/', UserGenericAPIView.as_view()),
     path('get/users/<int:pk>/', UserGenericAPIView.as_view()),
+
 ]
